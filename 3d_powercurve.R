@@ -94,7 +94,7 @@ wtg %>% filter(Device == "WTG01") %>% select(Date,WindSpeed,WindSpeed_IEC) %>%
 
 # Reading Power Curve Data From Manufacturer. It has WindSpeed and Powers for different air densities 
 # on seperate columns.
-g132 = read.table("g132_powercurve.csv",sep = ";",header = T)
+g132 = read.csv("g132_powercurve.csv",header = T)
 colnames(g132)[1] = "WindSpeed"
 
 # Let's have a look to create a perfectly overfit model to the manufacturers power curve
