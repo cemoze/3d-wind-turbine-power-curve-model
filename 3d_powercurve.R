@@ -150,4 +150,4 @@ surface3d(marigin[[1]], marigin[[2]], loess_pred[[1]], alpha=0.4, front="lines",
 
 # It's ready to use loess_surf model for creating realistic predictions. Let's make a prediction for 10 m/s wind speed
 # and 1.06 kg/m3 air density.
-predict(loess_surf, data.frame(WindSpeed = 10, AirDensity = 1.06))
+predict(loess_surf, data.frame(WindSpeed = c(5,11), AirDensity = 1.225))
