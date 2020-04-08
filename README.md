@@ -80,6 +80,25 @@ Have a look to the summary of the data.
 ```R
 summary(wtg)
 ```
+```
+    Device              Date             WindSpeed     WindSpeed_Std        Power         Temperature    
+ Length:8832        Length:8832        Min.   : 0.00   Min.   :0.0000   Min.   : -27.0   Min.   :-9.300  
+ Class :character   Class :character   1st Qu.: 4.20   1st Qu.:0.3000   1st Qu.: 122.9   1st Qu.: 5.000  
+ Mode  :character   Mode  :character   Median : 6.70   Median :0.5000   Median : 760.5   Median : 8.500  
+                                       Mean   : 7.78   Mean   :0.5838   Mean   :1209.9   Mean   : 7.893  
+                                       3rd Qu.:10.60   3rd Qu.:0.7000   3rd Qu.:2427.7   3rd Qu.:12.100  
+                                       Max.   :28.10   Max.   :5.0000   Max.   :3514.1   Max.   :19.500  
+                                                                                                         
+      Relh           Pressure       AirDensity     WindSpeed_IEC    
+ Min.   : 37.68   Min.   :813.5   Min.   :0.9806   Min.   : 0.2213  
+ 1st Qu.: 56.31   1st Qu.:819.4   1st Qu.:1.0020   1st Qu.: 4.0541  
+ Median : 65.38   Median :820.9   Median :1.0128   Median : 6.2983  
+ Mean   : 66.82   Mean   :820.6   Mean   :1.0151   Mean   : 7.3892  
+ 3rd Qu.: 74.19   3rd Qu.:822.4   3rd Qu.:1.0237   3rd Qu.:10.0655  
+ Max.   :100.00   Max.   :825.5   Max.   :1.0718   Max.   :27.0861  
+                                                   NA's   :18       
+
+```
 
 Things are getting hot! Load those required libraries.
 ```R
@@ -102,6 +121,7 @@ wtg %>% filter(Device == "WTG01") %>% select(Date,WindSpeed,WindSpeed_IEC) %>%
   scale_color_discrete(name = "Label",labels = c("Raw Wind Speed","Adjusted Wind Speed (IEC)")) +
   ggtitle("Raw Wind Speed vd Adjusted Wind Speed Comparison")
 ```
+![Raw_vs_Adjusted](graphs/raw_adj.png)
 
 Reading Power Curve Data From Manufacturer. It has WindSpeed and Powers for different air densities on seperate columns.
 ```R
@@ -119,6 +139,7 @@ g132 %>% select(WindSpeed,ad_1225) %>% ggplot(.,aes(x=WindSpeed,y=ad_1225)) +
   scale_colour_manual(name="Spans", values=c("royalblue", "darkred","purple4","orange")) +
   ggtitle("Loess - Span Deciding")
 ```
+![Span_Deciding](graphs/span_deciding.png)
 
 It seems that smaller spans provide us a better overfit. Now, lets gather our manufacturer powercurve data.
 ```R
@@ -148,6 +169,7 @@ Now lets plot all the power curves which have been taken from the manufacturer d
 library(plotly)
 plot_ly(x=g132_gathered$WindSpeed,y=g132_gathered$AirDensity,z=g132_gathered$Power)
 ```
+![3D_Plotly](graphs/3d_plotly.png)
 
 It seems we have perfectly plotted the points three dimensionally and we have also decided to use overfitted LOESS models for every power curves for each air density. However, we are in need of a multivariate model which uses wind speed and air density at the same time in order to get power. In other words, we have to create a surface to this 3d scatter plot.
 ```R
@@ -172,9 +194,12 @@ plot3d(g132_gathered$WindSpeed, g132_gathered$AirDensity, g132_gathered$Power, t
 surface3d(marigin[[1]], marigin[[2]], loess_pred[[1]], alpha=0.4, front="lines", back="lines")
 ```
 
+![3D Fitted Model](graphs/3d_fitted_model.png)
+
 It's ready to use loess_surf model for creating realistic predictions. Let's make a prediction for 10 m/s wind speed and 1.06 kg/m3 air density.
 ```R
-predict(loess_surf, data.frame(WindSpeed = 10, AirDensity = 1.06))
+predict(loess_surf, data.frame(WindSpeed = c(5,11), AirDensity = 1.225))
 ```
-
-![3D Fitted Model](graphs/3d_fitted_model.png)
+```
+[1]  429.2308 3405.1458
+```
