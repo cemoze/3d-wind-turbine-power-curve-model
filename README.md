@@ -176,3 +176,5 @@ It's ready to use loess_surf model for creating realistic predictions. Let's mak
 ```R
 predict(loess_surf, data.frame(WindSpeed = 10, AirDensity = 1.06))
 ```
+
+![3D Fitted Model](graphs/3d_fitted_model.png)
