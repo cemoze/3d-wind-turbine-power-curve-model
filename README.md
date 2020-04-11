@@ -30,10 +30,20 @@ air_dens_calc = function(temp,press,rh) {
 
   }
 }
+```
 
-air_dens_calc(press = wtg$Pressure,temp = wtg$Temperature)
-air_dens_calc(press = wtg$Pressure,temp = wtg$Temperature, rh = wtg$Relh)
+In case of having dew point temperature variable and not havinf relative humidity, here a function has also been defined for getting relative humidity by using temperature and dew point temperature data. Note that; units for these variable are celcius.
 
+```
+rh_calc = function(t,td) {
+  
+  100*(exp((17.625*td)/(243.04+td))/exp((17.625*t)/(243.04+t)))
+
+}
+```
+
+Creating air density column.
+```
 wtg$AirDensity = air_dens_calc(press = wtg$Pressure,temp = wtg$Temperature, rh = wtg$Relh)
 ```
 
