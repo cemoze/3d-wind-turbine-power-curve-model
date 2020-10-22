@@ -52,13 +52,13 @@ wtg$AirDensity = air_dens_calc(press = wtg$Pressure,temp = wtg$Temperature, rh =
 
 #IEC air density correction function
 iec_ad = function(ws,rho) {
-  ws_norm=ws*(rho/1.225)^1/3
+  ws_norm=ws*(rho/1.225)^(1/3)
   return(ws_norm)  
 }
 
 # IEC turbulence correction function
 iec_turb = function(ws, ws_std) {
-  ws_corr = ws*(1+3*(ws_std/ws)^2)^1/3
+  ws_corr = ws*(1+3*(ws_std/ws)^2)^(1/3)
   return(ws_corr)
 }
 
