@@ -36,7 +36,7 @@ air_dens_calc = function(temp,press,rh) {
     } else {
     
       warning("Moist air density is calculated!",call. = F)
-      p1 = 6.1078 * 10^(7.5*temp/((temp+273.15)+237.3))
+      p1 = 6.1078 * 10^(7.5*temp/(temp+237.3))
       pv = p1*rh
       pd = press*100 - pv
       rho = (pd/(287.058*(temp+273.15)))+(pv/(461.495*(temp+273.15)))
@@ -44,7 +44,7 @@ air_dens_calc = function(temp,press,rh) {
       
   }
 }
-```
+  ```
 
 In case of having dew point temperature variable and not having relative humidity, here a function has also been defined for getting relative humidity by using temperature and dew point temperature data. Note that; units for these variable are celcius.
 
