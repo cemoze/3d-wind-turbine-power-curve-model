@@ -179,7 +179,7 @@ plot3d(x = g132_gathered$WindSpeed,
 
 ![3D Scatterplot of Theoretical Power Curve](figures/first_3d_scatterplot.png)
 
-It seems we have perfectly plotted the points three dimensionally and we have also decided to use overfitted LOESS models for every power curves for each air density. However, we are in need of a multivariate model which uses wind speed and air density at the same time in order to get power. In other words, we have to create a surface to this 3d scatter plot.
+It seems we have perfectly plotted the points three dimensionally and we have also decided to use overfitted LOESS models for every power curves for each air density. However, we are in need of a model which uses wind speed and air density at the same time in order to get power. In other words, we have to create a surface to this 3d scatter plot.
 
 Since wind power is calculated by using the equation;
 
